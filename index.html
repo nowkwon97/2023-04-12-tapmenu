@@ -25,9 +25,59 @@
         // 탭 버튼 모든 요소에 click 이벤츠 추가
         tabButton.addEventListener("Click", (event) => {
           // 탭 버튼의 인덱스를 구하는 indexOf() 메서드와 event object 객체의 target 속성을 사용
-        })
-      })
-    }
+          const index = tabButtons.indexOf(event.target);
+          // CSS의 속성 선택자 활용한 예제 attribute selector라고도 부르며,
+          // 이것을 DOM API 객체에서는 dataset 이라는 속성으로 엑세스 할 수 있다.
+          const tabContentContainer = tabMenuContainer.querySelector("[data-tab-content-container]");
+
+          if (tabContentContainer) {
+            const tabContentsElements = tabContentContainer.childNodes;
+            // 아래의 forEach() 두 번째 매개변수 j는 index이다. 상위 반복문에서 i 를 사용하기에 구분하였다.
+            tabContentsElements.forEach((element, j) => {
+              element.style.display = j === index ? "block" : "none";
+            });
+          }
+          // 복잡해 보이지만 단순 스타일링 삼항연산자로 처리
+          tabButtons.forEach((button, j) => {
+            button.style.backgroundColor = j === index ? "#ccc" : "#fff";
+            button.style.color = j === index ? "#fff" : "#000";
+          });
+        });
+        tabMenu.appendChild(tabButton);
+        return tabButton; // tabButton, 상수 tabButtons는 함수가 호출될 때 배열을 반환한다.
+      });
+      // 탭 버튼의 첫 번째 요소에 고정적으로 스타일링
+      tabButtons[0].style.backgroundColor = "#ccc";
+      tabButtons[0].style.color = "#fff";
+
+      const tabContentContainer = document.createElement("div");
+      tabContentContainer.setAttribute("data-tab-content-container", "");
+      // .map() 메서드의 사용성이 매우 높은 것을 확인할 수 있다.
+      const tabContentElements = tabContents.map((content, i) => {
+        const tabContentElement = document.createElement("div");
+        tabContentElement.appendChild(content);
+        if (i !== 0) {
+          tabContentElement.style.display = "none";
+        }
+        return tabContentElement;
+      });
+      // prev는 이전에 반환된 값이고, curr(current) 은 현재 배열 요소이다.
+      tabContentElements.reduce((prev, curr) => {
+        prev.appendChild(curr);
+        return prev;
+      }, tabContentContainer);
+      tabMenuContainer.appendChild(tabMenu);
+      tabMenuContainer.appendChild(tabContentContainer);
+    };
+
+    // 결과적으로 배열 두 개를 인자(argument)로 받아서 복잡한 탭 메뉴를 생성한다.
+    const tabNames = ["web", "front-end", "framework"];
+    const tabContents = [
+      document.createTextNode("React.js"),
+      document.createTextNode("Vue.js"),
+      document.createTextNode("Angular.js")
+    ];
+    createTabMenu(tabNames, tabContents);
   </script>
 </body>
 </html>
