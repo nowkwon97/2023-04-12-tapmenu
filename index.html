@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    const createTabMenu = (tabNames, tabContents) => {
+      const tabMenuContainer = document.getElementById('root');
+      const tabMenu = document.createElement('ul');
+      tabMenu.style.listStyleType = 'none';
+      tabMenu.style.padding = 0;
+
+      const tabButtons = tabNames.map((name, i) => {
+        const tabButton = document.createElement('li');
+        tabButton.textContent = name; // 매개변수 nane을 탭 버튼의 텍스트로 설정
+        // 탭 버튼의 스타일링
+        tabButton.style.display = 'block';
+        tabButton.style.padding = '10px';
+        tabButton.style.border = '1px solid #ccc';
+        // 탭 버튼 모든 요소에 click 이벤츠 추가
+        tabButton.addEventListener("Click", (event) => {
+          // 탭 버튼의 인덱스를 구하는 indexOf() 메서드와 event object 객체의 target 속성을 사용
+        })
+      })
+    }
+  </script>
+</body>
+</html>
